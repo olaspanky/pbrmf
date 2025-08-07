@@ -1,45 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PBR Life Sciences - Fabric Capacity Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  </head>
-  <body class="bg-gradient-to-br from-white to-gray-100 min-h-screen flex flex-col">
-
-    <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <h1 class="text-2xl font-bold text-indigo-700">PBR Life Sciences</h1>
-        <span class="text-sm text-gray-500">Fabric Capacity Dashboard</span>
-      </div>
-    </header>
-
-    <!-- Content Wrapper -->
-    <main class="flex-grow flex items-center justify-center px-4 py-10">
-      <div class="w-full max-w-6xl bg-white shadow-lg rounded-2xl overflow-hidden p-4 md:p-6 border border-gray-200">
-        <div class="aspect-w-16 aspect-h-9">
-          <iframe
-            title="Fabric Capacity Metrics"
-            width="100%"
-            height="600"
-            src="https://app.powerbi.com/reportEmbed?reportId=bac59334-6f8f-4986-a3aa-0cbdcaef8d48&appId=383f7cd4-9e9d-4ea7-b192-c4d14156d202&autoAuth=true&ctid=f0bdb3d2-f91a-4989-ae9d-eac0c6a1ad8d&actionBarEnabled=true&reportCopilotInEmbed=true"
-            frameborder="0"
-            allowFullScreen="true"
-            class="w-full rounded-md"
-          ></iframe>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power BI Report</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .report-container {
+            background-color: #ffffff;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .report-title {
+            text-align: center;
+            color: #333;
+            font-size: 28px;
+            margin: 10px 0;
+        }
+        .iframe-wrapper {
+            flex-grow: 1;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .iframe-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        @media (max-width: 700px) {
+            .report-title {
+                font-size: 20px;
+                margin: 8px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <h1 class="report-title">PBR Life Sciences</h1>
+        <div class="iframe-wrapper">
+            <iframe title="Combine_2025Q1mapped" 
+                    src="https://app.fabric.microsoft.com/view?r=eyJrIjoiMjFmN2Y0ZTYtYTIwNy00Yzc3LWJlYTMtMTk3OGY2NDQ5ZTA4IiwidCI6ImYwYmRiM2QyLWY5MWEtNDk4OS1hZTlkLWVhYzBjNmExYWQ4ZCJ9" 
+                    allowfullscreen="true" 
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
         </div>
-      </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-100 text-center text-sm text-gray-500 py-6">
-      © <span id="year"></span> PBR Life Sciences. All rights reserved.
-    </footer>
-
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-  </body>
+    </div>
+</body>
 </html>
