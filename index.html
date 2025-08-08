@@ -3,67 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Power BI Report</title>
+    <title>PBR Life Sciences Power BI Dashboard</title>
     <style>
-        body {
+        /* Reset default margins and padding */
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f6f9;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
+            box-sizing: border-box;
         }
-        .report-container {
-            background-color: #ffffff;
-            width: 100vw;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
+
+        /* Full-screen container for the dashboard */
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+
+        /* Wrapper for the iframe */
+        .dashboard-wrapper {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-        }
-        .report-title {
-            text-align: center;
-            color: #333;
-            font-size: 28px;
-            margin: 10px 0;
-        }
-        .iframe-wrapper {
-            flex-grow: 1;
+            height: 100vh;
             width: 100%;
-            height: 100%;
+        }
+
+        /* Header styling */
+        .header {
+            background-color: #0078d4; /* Power BI brand color */
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Iframe container for responsiveness */
+        .iframe-container {
+            flex: 1;
             position: relative;
             overflow: hidden;
         }
-        .iframe-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+
+        .iframe-container iframe {
             width: 100%;
             height: 100%;
             border: none;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
-        @media (max-width: 700px) {
-            .report-title {
-                font-size: 20px;
-                margin: 8px 0;
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header {
+                font-size: 1.2rem;
+                padding: 0.8rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="report-container">
-        <h1 class="report-title">PBR Life Sciences</h1>
-        <div class="iframe-wrapper">
-            <iframe 
-                title="Combine_2025Q1mapped" 
-                src="https://app.fabric.microsoft.com/view?r=eyJrIjoiMjFmN2Y0ZTYtYTIwNy00Yzc3LWJlYTMtMTk3OGY2NDQ5ZTA4IiwidCI6ImYwYmRiM2QyLWY5MWEtNDk4OS1hZTlkLWVhYzBjNmExYWQ4ZCJ9" 
-                allowFullScreen="true">
-            </iframe>
+    <div class="dashboard-wrapper">
+        <div class="header">PBR Life Sciences Dashboard</div>
+        <div class="iframe-container">
+            <!-- Replace the src with your Power BI embed URL -->
+            <iframe
+                src="https://app.fabric.microsoft.com/view?r=eyJrIjoiMjFmN2Y0ZTYtYTIwNy00Yzc3LWJlYTMtMTk3OGY2NDQ5ZTA4IiwidCI6ImYwYmRiM2QyLWY5MWEtNDk4OS1hZTlkLWVhYzBjNmExYWQ4ZCJ9"
+                title="PBR Life Sciences Power BI Dashboard"
+                allowfullscreen
+            ></iframe>
         </div>
     </div>
 </body>
