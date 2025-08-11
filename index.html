@@ -12,68 +12,355 @@
             box-sizing: border-box;
         }
 
-        /* Full-screen container for the dashboard */
+        /* Full-screen container */
         body, html {
             height: 100%;
             width: 100%;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            overflow: hidden;
         }
 
-        /* Wrapper for the iframe */
-        .dashboard-wrapper {
+        /* Main container */
+        .container {
             display: flex;
-            flex-direction: column;
             height: 100vh;
             width: 100%;
         }
 
-        /* Header styling */
-        .header {
-            background-color: #0078d4; /* Power BI brand color */
+        /* Sidebar styling */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, #0078d4, #106ebe);
             color: white;
-            padding: 1rem;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
+            transition: transform 0.3s ease-in-out;
+            position: relative;
+            z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Iframe container for responsiveness */
-        .iframe-container {
+        .sidebar.collapsed {
+            transform: translateX(-240px);
+        }
+
+        /* Sidebar header */
+        .sidebar-header {
+            padding: 1.5rem 1rem;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-header p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Navigation menu */
+        .nav-menu {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-left-color: #fff;
+            font-weight: 600;
+        }
+
+        .nav-item i {
+            margin-right: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        /* Toggle button */
+        .toggle-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: -20px;
+            width: 40px;
+            height: 40px;
+            background: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+            z-index: 1001;
+        }
+
+        .toggle-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Main content area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        /* Header styling */
+        .header {
+            background: linear-gradient(135deg, #0078d4, #106ebe);
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        /* Dashboard container */
+        .dashboard-container {
             flex: 1;
             position: relative;
             overflow: hidden;
+            background-color: white;
+            margin: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .iframe-container iframe {
+        .dashboard-container iframe {
             width: 100%;
             height: 100%;
             border: none;
-            position: absolute;
-            top: 0;
-            left: 0;
+            border-radius: 8px;
+        }
+
+        /* Loading state */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .loading.hidden {
+            display: none;
         }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: absolute;
+                height: 100%;
+                z-index: 2000;
+            }
+
+            .sidebar.collapsed {
+                transform: translateX(-100%);
+            }
+
+            .toggle-btn {
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                right: auto;
+                z-index: 2001;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
             .header {
-                font-size: 1.2rem;
-                padding: 0.8rem;
+                padding-left: 4rem;
             }
         }
+
+        /* Icons using CSS */
+        .icon-dashboard::before { content: "📊"; }
+        .icon-analytics::before { content: "📈"; }
+        .icon-menu::before { content: "☰"; }
+        .icon-close::before { content: "✕"; }
     </style>
 </head>
 <body>
-    <div class="dashboard-wrapper">
-        <div class="header">PBR Life Sciences Dashboard</div>
-        <div class="iframe-container">
-            <!-- Replace the src with your Power BI embed URL -->
-            <iframe
-                src="https://app.fabric.microsoft.com/view?r=eyJrIjoiMjFmN2Y0ZTYtYTIwNy00Yzc3LWJlYTMtMTk3OGY2NDQ5ZTA4IiwidCI6ImYwYmRiM2QyLWY5MWEtNDk4OS1hZTlkLWVhYzBjNmExYWQ4ZCJ9"
-                title="PBR Life Sciences Power BI Dashboard"
-                allowfullscreen
-            ></iframe>
-        </div>
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>PBR Life Sciences</h2>
+                <p>Analytics Dashboard</p>
+            </div>
+            
+            <div class="nav-menu">
+                <button class="nav-item active" onclick="switchDashboard('dashboard1', this)">
+                    <span class="icon-dashboard"></span>
+                    Main Dashboard
+                </button>
+                <button class="nav-item" onclick="switchDashboard('dashboard2', this)">
+                    <span class="icon-analytics"></span>
+                    Drug Overview
+                </button>
+            </div>
+
+            <button class="toggle-btn" onclick="toggleSidebar()">
+                <span class="icon-menu" id="toggleIcon"></span>
+            </button>
+        </nav>
+
+        <!-- Main content area -->
+        <main class="main-content">
+           
+
+            <div class="dashboard-container">
+                <div class="loading" id="loading">Loading dashboard...</div>
+                <iframe 
+                    id="dashboardFrame"
+                    src="https://app.fabric.microsoft.com/view?r=eyJrIjoiMjFmN2Y0ZTYtYTIwNy00Yzc3LWJlYTMtMTk3OGY2NDQ5ZTA4IiwidCI6ImYwYmRiM2QyLWY5MWEtNDk4OS1hZTlkLWVhYzBjNmExYWQ4ZCJ9"
+                    title="PBR Life Sciences Power BI Dashboard"
+                    allowfullscreen
+                    style="display: none;"
+                    onload="hideLoading()"
+                ></iframe>
+            </div>
+        </main>
     </div>
+
+    <script>
+        // Dashboard configurations
+        const dashboards = {
+            dashboard1: {
+                title: "Main Dashboard",
+                description: "Comprehensive overview of PBR Life Sciences data and metrics",
+                url: "https://app.fabric.microsoft.com/view?r=eyJrIjoiMjFmN2Y0ZTYtYTIwNy00Yzc3LWJlYTMtMTk3OGY2NDQ5ZTA4IiwidCI6ImYwYmRiM2QyLWY5MWEtNDk4OS1hZTlkLWVhYzBjNmExYWQ4ZCJ9"
+            },
+            dashboard2: {
+                title: "Analytics Dashboard", 
+                description: "Advanced analytics and detailed insights for PBR Life Sciences",
+                url: "https://app.fabric.microsoft.com/view?r=eyJrIjoiOWE2ZGVlOGYtNTI3NC00OTliLTgyMzgtMWNlMDlhODcyOGFlIiwidCI6ImYwYmRiM2QyLWY5MWEtNDk4OS1hZTlkLWVhYzBjNmExYWQ4ZCJ9"
+            }
+        };
+
+        // Toggle sidebar visibility
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            sidebar.classList.toggle('collapsed');
+            
+            // Update toggle icon
+            if (sidebar.classList.contains('collapsed')) {
+                toggleIcon.className = 'icon-menu';
+            } else {
+                toggleIcon.className = 'icon-close';
+            }
+        }
+
+        // Switch between dashboards
+        function switchDashboard(dashboardKey, element) {
+            const dashboard = dashboards[dashboardKey];
+            
+            if (!dashboard) return;
+
+            // Update active nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            element.classList.add('active');
+
+            // Show loading state
+            showLoading();
+
+            // Update header information
+            document.getElementById('dashboardTitle').textContent = dashboard.title;
+            document.getElementById('dashboardDescription').textContent = dashboard.description;
+
+            // Update iframe source
+            const iframe = document.getElementById('dashboardFrame');
+            iframe.src = dashboard.url;
+
+            // Auto-collapse sidebar on mobile after selection
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    const sidebar = document.getElementById('sidebar');
+                    const toggleIcon = document.getElementById('toggleIcon');
+                    sidebar.classList.add('collapsed');
+                    toggleIcon.className = 'icon-menu';
+                }, 300);
+            }
+        }
+
+        // Show loading state
+        function showLoading() {
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('dashboardFrame').style.display = 'none';
+        }
+
+        // Hide loading state
+        function hideLoading() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('dashboardFrame').style.display = 'block';
+        }
+
+        // Handle responsive behavior
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('collapsed');
+                toggleIcon.className = 'icon-close';
+            } else {
+                sidebar.classList.add('collapsed');
+                toggleIcon.className = 'icon-menu';
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial toggle icon state based on screen size
+            const toggleIcon = document.getElementById('toggleIcon');
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.add('collapsed');
+                toggleIcon.className = 'icon-menu';
+            } else {
+                toggleIcon.className = 'icon-close';
+            }
+        });
+    </script>
 </body>
 </html>
